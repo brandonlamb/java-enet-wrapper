@@ -32,12 +32,9 @@ public class Host {
       in.close();
       out.close();
       System.load(libout.getAbsolutePath());
-    } catch (UnsatisfiedLinkError ule) {
+    } catch (UnsatisfiedLinkError | IOException ule) {
       System.err.println("failed to load embedded native library!");
       ule.printStackTrace();
-    } catch (IOException ioe) {
-      System.err.println("failed to load embedded native library!");
-      ioe.printStackTrace();
     }
         /*try
         {
@@ -54,8 +51,13 @@ public class Host {
 
   ByteBuffer nativeState;
 
-  public Host(InetSocketAddress address, int peerCount, int channelLimit, int incomingBandwidth, int outgoingBandwidth)
-    throws EnetException {
+  public Host(
+    InetSocketAddress address,
+    int peerCount,
+    int channelLimit,
+    int incomingBandwidth,
+    int outgoingBandwidth
+  ) throws EnetException {
     nativeState =
       create(addressToInt(address.getAddress()), address.getPort(), peerCount, channelLimit, incomingBandwidth,
              outgoingBandwidth);
@@ -70,11 +72,22 @@ public class Host {
     return buf.getInt(0);
   }
 
-  private static native ByteBuffer create(int address, int port, int peerCount, int channelLimit, int incomingBandwidth,
-                                          int outgoingBandwidth) throws EnetException;
+  private static native ByteBuffer create(
+    int address,
+    int port,
+    int peerCount,
+    int channelLimit,
+    int incomingBandwidth,
+    int outgoingBandwidth
+  ) throws EnetException;
 
-  private static native ByteBuffer connect(ByteBuffer ctx, int address, int port, int channelCount, int data)
-    throws EnetException;
+  private static native ByteBuffer connect(
+    ByteBuffer ctx,
+    int address,
+    int port,
+    int channelCount,
+    int data
+  ) throws EnetException;
 
   private static native void broadcast(ByteBuffer ctx, int channelID, ByteBuffer packet);
 
@@ -90,8 +103,7 @@ public class Host {
 
   private static native void destroy(ByteBuffer ctx) throws EnetException;
 
-  public Peer connect(InetSocketAddress address, int channelCount, int data)
-    throws EnetException {
+  public Peer connect(InetSocketAddress address, int channelCount, int data) throws EnetException {
     return new Peer(connect(nativeState, addressToInt(address.getAddress()), address.getPort(), channelCount, data));
   }
 

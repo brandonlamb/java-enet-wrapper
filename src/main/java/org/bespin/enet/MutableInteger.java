@@ -46,9 +46,7 @@ public class MutableInteger extends Number {
   public boolean equals(Object obj) {
     try {
       return ((MutableInteger) obj).value == this.value;
-    } catch (NullPointerException npe) {
-      return false;
-    } catch (ClassCastException cce) {
+    } catch (NullPointerException | ClassCastException npe) {
       return false;
     }
   }

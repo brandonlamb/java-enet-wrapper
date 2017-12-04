@@ -37,8 +37,7 @@ public class Peer {
     throttleConfigure(nativeState, interval, acceleration, deceleration);
   }
 
-  public void send(int channelID, Packet packet)
-    throws EnetException {
+  public void send(int channelID, Packet packet) throws EnetException {
     send(nativeState, channelID, packet.nativeState);
     packet.owned = false;
   }

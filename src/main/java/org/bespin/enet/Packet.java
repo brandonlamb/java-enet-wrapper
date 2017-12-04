@@ -61,14 +61,14 @@ public class Packet {
     super.finalize();
   }
 
-  public static enum Flag {
-    RELIABLE(1 << 0),
+  public enum Flag {
+    RELIABLE(1),
     UNSEQUENCED(1 << 1),
     UNRELIABLE_FRAGMENT(1 << 3);
 
     public final int bitValue;
 
-    private Flag(int bitValue) {
+    Flag(int bitValue) {
       this.bitValue = bitValue;
     }
 

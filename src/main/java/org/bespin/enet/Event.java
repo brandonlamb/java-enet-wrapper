@@ -54,7 +54,7 @@ public class Event {
     return new Packet(packet);
   }
 
-  public static enum Type {
+  public enum Type {
     None,
     Connect,
     Disconnect,
