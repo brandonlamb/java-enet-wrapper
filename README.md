@@ -6,6 +6,8 @@
 
 ## Building
 
+Currently targets mac.
+
 1. mvn clean package
-2. generate-header.sh
-3. make all
+1. generate-header.sh
+1. make all

@@ -11,13 +11,14 @@ endif()
 include_directories(
         ${JNI_INCLUDE_DIRS}
         src/main/native/include
-        /System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
-        enet-1.3.13/build/enet-1.3.13/installed/include
+        /System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers
+        enet-1.3.13/installed/include
+
 )
 #include_directories( enet-1.3.13/build/enet-1.3.13/installed/include )
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -O2 -Iinclude -fPIC -Wall -arch x86_64 -arch i386 -dynamiclib -lSystem -lenet -Lenet-1.3.13/installed/lib")
 set(SOURCE_FILES
         "src/main/native/org_bespin_enet_Event.c"
         "src/main/native/org_bespin_enet_Host.c"

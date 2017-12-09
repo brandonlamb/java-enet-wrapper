@@ -11,7 +11,7 @@ cd build
 
 #CFLAGS="-fPIC -m64 -Wall -Wextra -dynamiclib -lSystem -I${JAVA_HOME}/Headers -arch x86_64 -arch i386" ../configure --enable-static --disable-shared --prefix=${PWD}/enet-${ENET_VERSION}/installed
 #CFLAGS="-fPIC -m64 -Wall -Wextra -lSystem -arch x86_64 -arch i386" ../configure --enable-static --disable-shared --prefix=${PWD}/enet-${ENET_VERSION}/installed
-CFLAGS=-fPIC ../configure --enable-static --disable-shared --prefix=${PWD}/enet-${ENET_VERSION}/installed
+CFLAGS=-fPIC ../configure --enable-static --disable-shared --prefix=${CURR_DIR}/enet-${ENET_VERSION}/installed
 
 cd ${CURR_DIR}
 make -C enet-${ENET_VERSION}/build install
