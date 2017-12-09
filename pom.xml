@@ -59,18 +59,59 @@
 
         <configuration>
           <!--<javahOS>${os_name}</javahOS>-->
+          <javahOS>darwin</javahOS>
+
+          <javahOutputDirectory>${project.basedir}/src/main/native/include</javahOutputDirectory>
+
+          <javahClassNames>
+            <javahClassName>org.bespin.enet.Event</javahClassName>
+            <javahClassName>org.bespin.enet.Host</javahClassName>
+            <javahClassName>org.bespin.enet.MutableInteger</javahClassName>
+            <javahClassName>org.bespin.enet.Packet</javahClassName>
+            <javahClassName>org.bespin.enet.Peer</javahClassName>
+          </javahClassNames>
 
           <sources>
-            <source>
-              <directory>src/main/native</directory>
-              <fileNames>
-                <fileName>jni.c</fileName>
-              </fileNames>
-            </source>
+            <!--<source>-->
+              <!--<directory>src/main/native</directory>-->
+              <!--<fileNames>-->
+                <!--<fileName>jni.c</fileName>-->
+              <!--</fileNames>-->
+            <!--</source>-->
+
+            <!--<source>-->
+              <!--<directory>src/main/native</directory>-->
+              <!--<includes>-->
+                <!--<include>org_bespon_enet_Event.c</include>-->
+                <!--<include>org_bespon_enet_Host.c</include>-->
+                <!--<include>org_bespon_enet_Packet.c</include>-->
+                <!--<include>org_bespon_enet_Peer.c</include>-->
+              <!--</includes>-->
+            <!--</source>-->
+
             <source>
               <directory>src/main/native/include</directory>
             </source>
+
+            <!--<source>-->
+              <!--<directory>${native.source.dir}</directory>-->
+              <!--<fileNames>-->
+                <!--<fileName>org_bespin_enet_Event.c</fileName>-->
+                <!--<fileName>org_bespin_enet_Host.c</fileName>-->
+                <!--<fileName>org_bespin_enet_Packet.c</fileName>-->
+                <!--<fileName>org_bespin_enet_Peer.c</fileName>-->
+              <!--</fileNames>-->
+            <!--</source>-->
+
+            <!--<source>-->
+            <!--<directory>${native.source.dir}/include</directory>-->
+            <!--<directory>enet-1.3.13/include</directory>-->
+            <!--<directory>/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/include</directory>-->
+            <!--<directory>/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/include/darwin</directory>-->
+            <!--</source>-->
           </sources>
+
+
           <compilerProvider>generic-classic</compilerProvider>
           <compilerExecutable>gcc</compilerExecutable>
 
@@ -84,23 +125,6 @@
             <compilerStartOption>-O3</compilerStartOption>
           </compilerStartOptions>
 
-          <sources>
-            <source>
-              <directory>${native.source.dir}</directory>
-              <fileNames>
-                <fileName>event.c</fileName>
-                <fileName>host.c</fileName>
-                <fileName>packet.c</fileName>
-                <fileName>peer.c</fileName>
-              </fileNames>
-            </source>
-
-            <source>
-              <directory>${native.source.dir}/include</directory>
-              <directory>enet-1.3.13/include</directory>
-            </source>
-          </sources>
-
           <linkerOutputDirectory>target</linkerOutputDirectory>
           <linkerExecutable>gcc</linkerExecutable>
 
@@ -109,10 +133,11 @@
             <linkerStartOption>-shared</linkerStartOption>
           </linkerStartOptions>
 
-          <linkerFinalName/>
+          <!--<linkerFinalName/>-->
 
           <!--<linkerEndOptions>-->
             <!--<linkerEndOption>-o ${project.build.directory}/${lib_name}</linkerEndOption>-->
+            <!--<linkerEndOption>-I/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/include</linkerEndOption>-->
           <!--</linkerEndOptions>-->
         </configuration>
 

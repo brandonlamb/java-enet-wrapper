@@ -37,17 +37,17 @@ exej () {
     cd ../
 }
 
-if [ $1 == '--refresh-header' ]
+if [ $1=='--refresh-header' ]
 then
     refresh_header
 fi
 
-if [ $1 == '--build' ]
+if [ $1=='--build' ]
 then
     buildj
 fi
 
-if [ $1 == '--execute-java' ]
+if [ $1=='--execute-java' ]
 then
     exej
 fi
