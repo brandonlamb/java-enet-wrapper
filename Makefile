@@ -11,7 +11,7 @@ SYSTEM := $(shell uname -s)
 CC=gcc
 CCLD=$(CC)
 LIBS := -lenet
-ENET_VERSION = 1.3.5
+ENET_VERSION = 1.3.13
 ENET_A = enet-$(ENET_VERSION)/installed/lib/libenet.a
 ENET_CFLAGS = -Ienet-$(ENET_VERSION)/installed/include
 ENET_LDFLAGS = -Lenet-$(ENET_VERSION)/installed/lib
@@ -39,13 +39,13 @@ TARGET=libjava-enet-wrapper-native.$(SHLIB_EXT)
 
 all: $(TARGET)
 
+enet-$(ENET_VERSION):
+	tar xzf enet-$(ENET_VERSION).tar.gz
+
 $(ENET_A): enet-$(ENET_VERSION)
 	mkdir -p enet-$(ENET_VERSION)/build
 	(cd enet-$(ENET_VERSION)/build; CFLAGS=-fPIC ../configure --enable-static --disable-shared --prefix=$(PWD)/enet-$(ENET_VERSION)/installed)
 	$(MAKE) -C enet-$(ENET_VERSION)/build install
-
-enet-$(ENET_VERSION):
-	tar xzf enet-$(ENET_VERSION).tar.gz
 
 $(TARGET): $(ENET_A) $(OBJECTS)
 	$(CCLD) $(SHARED) -o $(TARGET) $(OBJECTS) $(ENET_LDFLAGS) $(EXTRA_LIBS) $(LIBS)
