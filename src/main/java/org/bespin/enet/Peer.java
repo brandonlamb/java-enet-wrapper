@@ -9,7 +9,7 @@ public class Peer {
 
   ByteBuffer nativeState;
 
-  Peer(ByteBuffer nativeState) {
+  Peer(final ByteBuffer nativeState) {
     this.nativeState = nativeState;
   }
 
@@ -33,16 +33,16 @@ public class Peer {
 
   private static native void reset(ByteBuffer ctx);
 
-  public void throttleConfigure(int interval, int acceleration, int deceleration) {
+  public void throttleConfigure(final int interval, final int acceleration, final int deceleration) {
     throttleConfigure(nativeState, interval, acceleration, deceleration);
   }
 
-  public void send(int channelID, Packet packet) throws EnetException {
+  public void send(final int channelID, final Packet packet) throws EnetException {
     send(nativeState, channelID, packet.nativeState);
     packet.owned = false;
   }
 
-  public Packet receive(MutableInteger channelID) throws EnetException {
+  public Packet receive(final MutableInteger channelID) throws EnetException {
     ByteBuffer b = receive(nativeState, channelID);
     if (b == null) {
       return null;
@@ -54,15 +54,15 @@ public class Peer {
     ping(nativeState);
   }
 
-  public void disconnectNow(int data) {
+  public void disconnectNow(final int data) {
     disconnect_now(nativeState, data);
   }
 
-  public void disconnect(int data) {
+  public void disconnect(final int data) {
     disconnect(nativeState, data);
   }
 
-  public void disconnectLater(int data) {
+  public void disconnectLater(final int data) {
     disconnect_later(nativeState, data);
   }
 

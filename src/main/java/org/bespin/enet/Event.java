@@ -10,7 +10,7 @@ public class Event {
     this(ByteBuffer.allocateDirect(sizeof()));
   }
 
-  Event(ByteBuffer nativeState) {
+  Event(final ByteBuffer nativeState) {
     this.nativeState = nativeState;
   }
 
@@ -27,11 +27,8 @@ public class Event {
   private static native ByteBuffer packet(ByteBuffer ctx);
 
   public Peer peer() {
-    ByteBuffer peer = peer(nativeState);
-    if (peer == null) {
-      return null;
-    }
-    return new Peer(peer);
+    final ByteBuffer peer = peer(nativeState);
+    return (peer == null) ? null : new Peer(peer);
   }
 
   public Type type() {
@@ -47,11 +44,8 @@ public class Event {
   }
 
   public Packet packet() {
-    ByteBuffer packet = packet(nativeState);
-    if (packet == null) {
-      return null;
-    }
-    return new Packet(packet);
+    final ByteBuffer packet = packet(nativeState);
+    return (packet == null) ? null : new Packet(packet);
   }
 
   public enum Type {

@@ -4,11 +4,11 @@ public class MutableInteger extends Number {
 
   private int value;
 
-  public MutableInteger(int value) {
+  public MutableInteger(final int value) {
     this.value = value;
   }
 
-  public void setValue(int newValue) {
+  public void setValue(final int newValue) {
     this.value = newValue;
   }
 
@@ -43,10 +43,10 @@ public class MutableInteger extends Number {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     try {
       return ((MutableInteger) obj).value == this.value;
-    } catch (NullPointerException | ClassCastException npe) {
+    } catch (final NullPointerException | ClassCastException npe) {
       return false;
     }
   }

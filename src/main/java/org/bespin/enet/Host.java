@@ -15,24 +15,28 @@ public class Host {
 
   static {
     try {
-      ClassLoader loader = Host.class.getClassLoader();
-      InputStream in = loader.getResourceAsStream("libjava-enet-wrapper-native.so");
+      final ClassLoader loader = Host.class.getClassLoader();
+      final InputStream in = loader.getResourceAsStream("libjava-enet-wrapper-native.so");
+
       String tmpname = System.getProperty("org.bespin.enet.tmpdir");
       if (tmpname == null) {
         tmpname = System.getProperty("java.io.tmpdir");
       }
-      File tmpdir = new File(tmpname);
-      File libout = new File(tmpdir, "libjava-enet-wrapper-native.so");
-      FileOutputStream out = new FileOutputStream(libout);
-      byte[] b = new byte[1024];
+
+      final File tmpdir = new File(tmpname);
+      final File libout = new File(tmpdir, "libjava-enet-wrapper-native.so");
+      final FileOutputStream out = new FileOutputStream(libout);
+      final byte[] b = new byte[1024];
+
       int len = 0;
       while ((len = in.read(b)) != -1) {
         out.write(b, 0, len);
       }
+
       in.close();
       out.close();
       System.load(libout.getAbsolutePath());
-    } catch (UnsatisfiedLinkError | IOException ule) {
+    } catch (final UnsatisfiedLinkError | IOException ule) {
       System.err.println("failed to load embedded native library!");
       ule.printStackTrace();
     }
@@ -52,22 +56,27 @@ public class Host {
   ByteBuffer nativeState;
 
   public Host(
-    InetSocketAddress address,
-    int peerCount,
-    int channelLimit,
-    int incomingBandwidth,
-    int outgoingBandwidth
+    final InetSocketAddress address,
+    final int peerCount,
+    final int channelLimit,
+    final int incomingBandwidth,
+    final int outgoingBandwidth
   ) throws EnetException {
-    nativeState =
-      create(addressToInt(address.getAddress()), address.getPort(), peerCount, channelLimit, incomingBandwidth,
-             outgoingBandwidth);
+    nativeState = create(
+      addressToInt(address.getAddress()),
+      address.getPort(),
+      peerCount,
+      channelLimit,
+      incomingBandwidth,
+      outgoingBandwidth
+    );
   }
 
-  static int addressToInt(InetAddress address) throws EnetException {
+  static int addressToInt(final InetAddress address) throws EnetException {
     if (!(address instanceof Inet4Address)) {
       throw new EnetException("enet only supports IPv4");
     }
-    ByteBuffer buf = ByteBuffer.wrap(address.getAddress());
+    final ByteBuffer buf = ByteBuffer.wrap(address.getAddress());
     buf.order(ByteOrder.nativeOrder());
     return buf.getInt(0);
   }
@@ -103,19 +112,19 @@ public class Host {
 
   private static native void destroy(ByteBuffer ctx) throws EnetException;
 
-  public Peer connect(InetSocketAddress address, int channelCount, int data) throws EnetException {
+  public Peer connect(final InetSocketAddress address, final int channelCount, final int data) throws EnetException {
     return new Peer(connect(nativeState, addressToInt(address.getAddress()), address.getPort(), channelCount, data));
   }
 
-  public void broadcast(int channelID, Packet packet) {
+  public void broadcast(final int channelID, final Packet packet) {
     broadcast(nativeState, channelID, packet.nativeState);
   }
 
-  public void channelLimit(int channelLimit) {
+  public void channelLimit(final int channelLimit) {
     channel_limit(nativeState, channelLimit);
   }
 
-  public void bandwidthLimit(int incomingBandwidth, int outgoingBandwidth) {
+  public void bandwidthLimit(final int incomingBandwidth, final int outgoingBandwidth) {
     bandwidth_limit(nativeState, incomingBandwidth, outgoingBandwidth);
   }
 
@@ -124,24 +133,18 @@ public class Host {
   }
 
   public Event checkEvents() throws EnetException {
-    Event event = new Event();
-    int ret = checkEvents(nativeState, event.nativeState);
-    if (ret <= 0) {
-      return null;
-    }
-    return event;
+    final Event event = new Event();
+    final int ret = checkEvents(nativeState, event.nativeState);
+    return (ret <= 0) ? null : event;
   }
 
   public Event service(int timeout) throws EnetException {
-    Event event = new Event();
-    int ret = service(nativeState, timeout, event.nativeState);
-    if (ret <= 0) {
-      return null;
-    }
-    return event;
+    final Event event = new Event();
+    final int ret = service(nativeState, timeout, event.nativeState);
+    return (ret <= 0) ? null : event;
   }
 
-  public Event service(long timeout, TimeUnit unit) throws EnetException {
+  public Event service(final long timeout, final TimeUnit unit) throws EnetException {
     return service((int) TimeUnit.MILLISECONDS.convert(timeout, unit));
   }
 
