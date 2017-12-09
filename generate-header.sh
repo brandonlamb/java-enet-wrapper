@@ -1,10 +1,10 @@
 #!/bin/sh
 
 #CURR_DIR=`dirname $0`
-#CURR_DIR=`pwd`
-CURR_DIR="/Users/brlamb/Documents/src/java-enet-wrapper"
+CURR_DIR=`pwd`
+#CURR_DIR="/Users/brlamb/Documents/src/java-enet-wrapper"
 
-echo '### Generating JNI Header Files ###'
+echo "Generating JNI Header Files"
 #cd ${CURR_DIR}
 #cd src/main/java/org/bespin/enet
 #${JAVA_HOME}/bin/javah -verbose -jni -d ../native/include com.example.JniWrapper

@@ -7,7 +7,7 @@ SOURCES := org_bespin_enet_Event.c \
 
 OBJECTS := $(SOURCES:.c=.o)
 SYSTEM := $(shell uname -s)
-#CFLAGS=-g -O2 -Iinclude -fPIC
+CFLAGS=-g -O2 -Iinclude -fPIC
 CC=gcc
 CCLD=$(CC)
 LIBS := -lenet
@@ -15,6 +15,7 @@ ENET_VERSION = 1.3.13
 ENET_A = enet-$(ENET_VERSION)/installed/lib/libenet.a
 ENET_CFLAGS = -Ienet-$(ENET_VERSION)/installed/include
 ENET_LDFLAGS = -Lenet-$(ENET_VERSION)/installed/lib
+HEADER_CFLAGS = -Isrc/main/native/include
 
 ifeq ($(SYSTEM),Darwin)
   SHLIB_EXT=jnilib
@@ -22,7 +23,7 @@ ifeq ($(SYSTEM),Darwin)
   EXTRA_LIBS=-lSystem
   JAVA_HOME = /System/Library/Frameworks/JavaVM.framework/Versions/Current
   JDK_INCLUDES = -I$(JAVA_HOME)/Headers
-  CFLAGS=$(CFLAGS) -arch x86_64 -arch i386
+  CFLAGS := -arch x86_64 -arch i386
 else
 ifeq ($(SYSTEM),Linux)
   SHLIB_EXT=so
@@ -39,6 +40,9 @@ TARGET=libjava-enet-wrapper-native.$(SHLIB_EXT)
 
 all: $(TARGET)
 
+clean:
+	rm $(TARGET) *.o
+
 enet-$(ENET_VERSION):
 	tar xzf enet-$(ENET_VERSION).tar.gz
 
@@ -51,4 +55,4 @@ $(TARGET): $(ENET_A) $(OBJECTS)
 	$(CCLD) $(SHARED) -o $(TARGET) $(OBJECTS) $(ENET_LDFLAGS) $(EXTRA_LIBS) $(LIBS)
 
 $(OBJECTS): %.o: %.c
-	$(CC) $(CFLAGS) $(JDK_INCLUDES) $(ENET_CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(JDK_INCLUDES) $(ENET_CFLAGS) $(HEADER_CFLAGS) -c -o $@ $<
