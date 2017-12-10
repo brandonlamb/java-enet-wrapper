@@ -14,32 +14,32 @@ import java.util.concurrent.TimeUnit;
 public class Host {
 
   static {
-    try {
-      final ClassLoader loader = Host.class.getClassLoader();
-      final InputStream in = loader.getResourceAsStream("libjava-enet-wrapper-native.so");
-
-      String tmpname = System.getProperty("org.bespin.enet.tmpdir");
-      if (tmpname == null) {
-        tmpname = System.getProperty("java.io.tmpdir");
-      }
-
-      final File tmpdir = new File(tmpname);
-      final File libout = new File(tmpdir, "libjava-enet-wrapper-native.so");
-      final FileOutputStream out = new FileOutputStream(libout);
-      final byte[] b = new byte[1024];
-
-      int len = 0;
-      while ((len = in.read(b)) != -1) {
-        out.write(b, 0, len);
-      }
-
-      in.close();
-      out.close();
-      System.load(libout.getAbsolutePath());
-    } catch (final UnsatisfiedLinkError | IOException ule) {
-      System.err.println("failed to load embedded native library!");
-      ule.printStackTrace();
-    }
+//    try {
+//      final ClassLoader loader = Host.class.getClassLoader();
+//      final InputStream in = loader.getResourceAsStream("libjava-enet-wrapper-native.so");
+//
+//      String tmpname = System.getProperty("org.bespin.enet.tmpdir");
+//      if (tmpname == null) {
+//        tmpname = System.getProperty("java.io.tmpdir");
+//      }
+//
+//      final File tmpdir = new File(tmpname);
+//      final File libout = new File(tmpdir, "libjava-enet-wrapper-native.so");
+//      final FileOutputStream out = new FileOutputStream(libout);
+//      final byte[] b = new byte[1024];
+//
+//      int len;
+//      while ((len = in.read(b)) != -1) {
+//        out.write(b, 0, len);
+//      }
+//
+//      in.close();
+//      out.close();
+//      System.load(libout.getAbsolutePath());
+//    } catch (final UnsatisfiedLinkError | IOException ule) {
+//      System.err.println("failed to load embedded native library!");
+//      ule.printStackTrace();
+//    }
         /*try
         {
             System.out.println("load from " + System.getProperty("java.library.path"));
@@ -53,7 +53,7 @@ public class Host {
         }*/
   }
 
-  ByteBuffer nativeState;
+  private ByteBuffer nativeState;
 
   public Host(
     final InetSocketAddress address,

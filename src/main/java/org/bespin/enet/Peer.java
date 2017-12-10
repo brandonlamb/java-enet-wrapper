@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 
 public class Peer {
 
-  ByteBuffer nativeState;
+  private ByteBuffer nativeState;
 
   Peer(final ByteBuffer nativeState) {
     this.nativeState = nativeState;
